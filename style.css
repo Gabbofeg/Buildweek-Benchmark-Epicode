@@ -84,4 +84,9 @@ body {
     align-items: end;
     margin-bottom: 80px;
     font-size: 25px;
+    gap: 30px;
+}
+
+.rightSpan{
+    color: #D20094;
 }

@@ -4,11 +4,9 @@ button.addEventListener(`click`, () => {
 
     let checkbox = document.getElementById("checkbox");
 
-    checkbox.addEventListener("change", function() {
-        if (checkbox.checked) {
-            window.location.href = "pagina.html"; 
-        }
-    });
+    if (checkbox.checked) {
+        window.location.href = "benchmark.html"; 
+    }
 
-})
+});
 console.log(checkbox);

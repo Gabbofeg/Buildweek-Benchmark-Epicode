@@ -99,15 +99,16 @@
     ];
 
 //const objDisplay = document.querySelector("display");
+
+
 const objDisplay = document.getElementById("display");
 console.log("objDisplay vale: " , objDisplay);
+const objCounter = document.getElementById("txtCounter");
+//console.log("objCounter vale: " , objCounter)
+const objBtnContinue = document.getElementById("btnContinue");
+objBtnContinue.addEventListener("click", nextQuestion);
 
-
-  const objCounter = document.getElementById("txtCounter");
-  //console.log("objCounter vale: " , objCounter);
-
-  const objBtnContinue = document.getElementById("btnContinue");
-  objBtnContinue.addEventListener("click", nextQuestion);
+  nextQuestion ();
 
   function makeRadioButtons(index){
     console.log("generiamo un radio button");
