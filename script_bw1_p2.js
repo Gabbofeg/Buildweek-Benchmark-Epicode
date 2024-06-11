@@ -101,7 +101,7 @@
 //const objDisplay = document.querySelector("display");
 
 
-const objDisplay = document.getElementById("display");
+const objDisplay = document.getElementById("customRadio");
 console.log("objDisplay vale: " , objDisplay);
 const objCounter = document.getElementById("txtCounter");
 //console.log("objCounter vale: " , objCounter)
