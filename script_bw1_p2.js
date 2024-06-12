@@ -100,6 +100,8 @@
 
 //const objDisplay = document.querySelector("display");
 
+const objQuestionDisplay = document.getElementById("question");
+console.log("objQustioneDisplay vale: " , objQuestionDisplay);
 
 const objDisplay = document.getElementById("customRadio");
 console.log("objDisplay vale: " , objDisplay);
@@ -108,22 +110,59 @@ const objCounter = document.getElementById("txtCounter");
 const objBtnContinue = document.getElementById("btnContinue");
 objBtnContinue.addEventListener("click", nextQuestion);
 
-  nextQuestion ();
+  //nextQuestion ();
+
+  function removeChilds(element){
+    while (element.firstChild) {
+      element.removeChild(element.firstChild);
+    }
+
+  }
+
+
+  function showQuestion(index){
+    console.log("h1 prima della modifica vale: ", objQuestionDisplay.innerText);
+    objQuestionDisplay.innerText = questions[index].question;
+    console.log("lunghezza array h1 contenenente la domanda vale:", objQuestionDisplay.length);
+    console.log("h1 contenenente la domanda vale:", objQuestionDisplay.innerText)
+  }
+
+
+
 
   function makeRadioButtons(index){
-    console.log("generiamo un radio button");
-    let objRadioButton = document.createElement("input");
-    objRadioButton.type = "radio";
-    objRadioButton.name = "question"+index;
+    //console.log("funzione genera i radio button");
+    let arAnswer = questions[index].incorrect_answers;
+    let rndNumber = Math.floor(Math.random()*arAnswer.length);
+    //console.log("array delle risposte sbagliate vale: ", arAnswer);
 
-    //console.log(objRadioButton);
-    let lblRadioButton = document.createElement("label");
-    lblRadioButton.for = "question"+index;
-    lblRadioButton.innerText = questions[index].question
+    arAnswer.splice(rndNumber,0,questions[index].correct_answer);
+    //let rndNumber = Math.floor(Math.random()*5);
 
-    //objDisplay.appendChild(objRadioButton); //, lblRadioButton);
-    objDisplay.append(objRadioButton, lblRadioButton);
+    //console.log("Numero random  vale: ", rndNumber);
+    console.log("array delle risposte totali vale: ", arAnswer);
 
+    //itero l'array delle risposte e creo i radiobuttons
+    for (let i=0; i<arAnswer.length; i++){
+      let objDiv = document.createElement("div");
+      let objRadioButton = document.createElement("input");
+      objRadioButton.type = "radio";
+      objRadioButton.name = "question"+index;
+      objRadioButton.value = arAnswer[i];
+      objRadioButton.id ="rb" + i;
+
+      //console.log(objRadioButton);
+      let lblRadioButton = document.createElement("label");
+      lblRadioButton.for = "rb" + i;
+      //lblRadioButton.innerText = questions[index].question
+      lblRadioButton.innerText = arAnswer[i]
+
+      //objDisplay.appendChild(objRadioButton); //, lblRadioButton);
+      objDiv.append(objRadioButton, lblRadioButton);
+      objDisplay.append(objDiv);
+      //objDisplay.append(objRadioButton, lblRadioButton);
+      
+    } 
 
   }
 
@@ -133,6 +172,9 @@ objBtnContinue.addEventListener("click", nextQuestion);
     let valore = parseInt(objCounter.value);
     if (valore < questions.length){
       console.log(valore+1, " domanda dell' array questinos  " , questions[valore].question);
+      
+      //show Question
+      showQuestion(valore);
       //makeRadioButton
       makeRadioButtons(valore);
 
@@ -146,4 +188,5 @@ objBtnContinue.addEventListener("click", nextQuestion);
     console.log("prima domand dell' array questinos lungo: " , questions[0].question);
     console.log("prima domand dell' array quante risposte ci sono ?: " , questions[0].incorrect_answers.length);
     
-    
+    nextQuestion();
+    //removeChilds(objDisplay);
