@@ -100,22 +100,89 @@
 
 //const objDisplay = document.querySelector("display");
 
+const arAnswerContainer =[];  // array che mi contiene le risposte: 1 = risposta corretta, 0 = risposta sbagliata
+
+let rightAnswerCounter = 0;
+
+const objQuestionText = document.getElementById("questionText");
+
+//oggetto HTML che contiene la domanda del quiz
 const objQuestionDisplay = document.getElementById("question");
 console.log("objQustioneDisplay vale: " , objQuestionDisplay);
 
+// oggetto HTML che visualizza le risposte multiple e contiene i radio button
 const objDisplay = document.getElementById("customRadio");
 console.log("objDisplay vale: " , objDisplay);
+
+//oggetto HTML che è un contatore delle domande
 const objCounter = document.getElementById("txtCounter");
 //console.log("objCounter vale: " , objCounter)
+
+// oggetto HTML, è il bottone continua che permetta di andare avanti nel quiz
 const objBtnContinue = document.getElementById("btnContinue");
 objBtnContinue.addEventListener("click", nextQuestion);
 
+// oggetto HTML che visualizza il numero della domanda alla quale l'utente è arrivato
+const objLefSpan = document.querySelector(".leftSpan");
+
+// oggetto HTML che invece serve a visualizare il numero totale delle domande che compongono il quiz
+const objRightSpan = document.querySelector(".rightSpan");
+
+
+
+  function showResult(){
+    removeChilds(objDisplay);
+    objQuestionDisplay.innerText = "Hai completato il quiz, hai risposto correttamente a: " + rightAnswerCounter + " domande su " + questions.length + " sotto puoi vedere il risultato";
+    let objDiv = document.createElement("div");
+    for (let i=0; i<arAnswerContainer.length;i++){
+      let objPar = document.createElement("p");
+      let objSpan = document.createElement("span");
+      let strResult = "Domanda: " + (i+1) + ") " + questions[i].question + " -- risposta: ";
+      
+      if (arAnswerContainer[i]){
+        //strResult += " -- risposta corretta";
+        objSpan.innerText = "corretta"
+      }
+      else{
+        //strResult += " -- risposta errata";
+        objSpan.innerText = "errata";
+        objSpan.className = "rightSpan";
+      }
+      objPar.innerText = strResult;
+      objPar.appendChild(objSpan);
+      objDiv.append(objPar);
+    }
+    objQuestionText.className = "questionLog";
+    objQuestionText.append(objDiv);
+  }
+
+
   //nextQuestion ();
+  function checkAnswer(index){
+    //alert("la risposta corretta è: "+questions[index].correct_answer);
+    const arRadioButton = document.querySelectorAll(".bottoni");
+    let bCorrectAnswer = false;
+    for (let i=0;i<arRadioButton.length;i++){
+      if (arRadioButton[i].checked && arRadioButton[i].value === questions[index].correct_answer){
+        bCorrectAnswer = true;
+        break;
+      }
+
+    }
+    bCorrectAnswer ? arAnswerContainer.push(1) : arAnswerContainer.push(0);
+    if (bCorrectAnswer) rightAnswerCounter++;
+    //arAnswerContainer.push(bCorrectAnswer);
+    //alert(arAnswerContainer);
+  }
+
 
   function removeChilds(element){
+   element.textContent ="";
+   /*
     while (element.firstChild) {
       element.removeChild(element.firstChild);
     }
+    */ 
 
   }
 
@@ -131,6 +198,8 @@ objBtnContinue.addEventListener("click", nextQuestion);
 
 
   function makeRadioButtons(index){
+    //svuoto il contenitore delle risposte
+    removeChilds(objDisplay);
     //console.log("funzione genera i radio button");
     let arAnswer = questions[index].incorrect_answers;
     let rndNumber = Math.floor(Math.random()*arAnswer.length);
@@ -150,6 +219,7 @@ objBtnContinue.addEventListener("click", nextQuestion);
       objRadioButton.name = "question"+index;
       objRadioButton.value = arAnswer[i];
       objRadioButton.id ="rb" + i;
+      objRadioButton.className ="bottoni";
 
       //console.log(objRadioButton);
       let lblRadioButton = document.createElement("label");
@@ -170,17 +240,36 @@ objBtnContinue.addEventListener("click", nextQuestion);
 
   function nextQuestion(){
     let valore = parseInt(objCounter.value);
+    if (valore>0 && valore <= questions.length){
+      //controllo se la risposta è corretta
+      checkAnswer(valore-1);
+    }
+
+
     if (valore < questions.length){
       console.log(valore+1, " domanda dell' array questinos  " , questions[valore].question);
       
+    
       //show Question
       showQuestion(valore);
       //makeRadioButton
       makeRadioButtons(valore);
-
+    }  
       valore += 1;
+    //  objCounter.value = valore; 
+    //  objLefSpan.innerText ="Question " + valore;
+    
+    if (valore === questions.length+1){
+      alert(arAnswerContainer);
+      alert("hai risposto correttamente a "+rightAnswerCounter);
+      objBtnContinue.disabled = true;
+      showResult();
+    }else{
       objCounter.value = valore; 
+      objLefSpan.innerText ="Question " + valore;
+    
     }
+    
   }
 
 
@@ -188,5 +277,8 @@ objBtnContinue.addEventListener("click", nextQuestion);
     console.log("prima domand dell' array questinos lungo: " , questions[0].question);
     console.log("prima domand dell' array quante risposte ci sono ?: " , questions[0].incorrect_answers.length);
     
+   if (objCounter.value==="0"){
+    objRightSpan.innerText = "/"+questions.length;
     nextQuestion();
+  }
     //removeChilds(objDisplay);
