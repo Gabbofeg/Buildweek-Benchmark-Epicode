@@ -85,8 +85,27 @@ footer div {
 }
 
 #checkbox {
-  user-select: none;
-  border: 1px solid white;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 2px solid white;
+  position: relative;
+  cursor: pointer;
+  background-color: transparent;
+}
+
+#checkbox:checked::before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 10px;
+  height: 10px;
+  background-color: #00ffff;
+  transform: translate(-50%, -50%);
 }
 
 #button {
