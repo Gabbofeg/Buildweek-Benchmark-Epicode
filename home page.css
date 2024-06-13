@@ -1,15 +1,58 @@
-*{
-    box-sizing: border-box;
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap");
+* {
+  box-sizing: border-box;
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-size: 16px;
+  font-style: normal;
+  font-variation-settings: "slnt" 0;
+  color: white;
 }
 
-body{
-    background-image: url(assets/bg.jpg);
-    background-size: cover;
-    background-repeat: no-repeat;
-    width: 100vw;
-    height: 100vh;
+html {
+  height: 100%;
 }
 
-html{
-    height: 100%;
+body {
+  background-image: url(assets/bg.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 100vw;
+  height: 100vh;
+  padding: 100px;
+}
+
+header {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+
+header img {
+  height: 50px;
+}
+
+#title {
+  font-family: "Outfit", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  font-size: 60px;
+  font-weight: 400;
+}
+
+#title span {
+  font-family: "Outfit", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  font-size: 60px;
+  font-weight: 700;
+}
+
+#instructions {
+  color: #d20094;
+}
+
+#button {
+  background-color: #00ffff;
 }
