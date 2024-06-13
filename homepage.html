@@ -17,7 +17,7 @@
         <h1 id="title">Welcome to <span>your exam</span></h1>
       </div>
 
-      <div>
+      <div id="istructionsContainer">
         <h3 id="instructions">Instructions</h3>
         <p>
           We dont't expect most engineers to know the answers to all of these
@@ -25,7 +25,7 @@
         </p>
       </div>
 
-      <div>
+      <ul>
         <li>
           Each question is <span>timed</span> and can only be
           <span>answered once.</span>
@@ -37,15 +37,16 @@
         </li>
 
         <li>This exam will take approx. <span>0-5 minutes.</span></li>
-      </div>
+      </ul>
     </main>
 
     <footer>
       <div>
-        <input type="checkbox" id="checkbox" />
-        <span>I promise to answer myself without help from anyone</span>
+        <input type="checkbox" id="checkbox" name="check" />
+        <label for="check"
+          >I promise to answer myself without help from anyone</label
+        >
       </div>
-
       <button id="button">PROCEED</button>
     </footer>
   </body>

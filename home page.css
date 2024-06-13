@@ -2,6 +2,8 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap");
 * {
   box-sizing: border-box;
+  padding: 0px;
+  margin: 0px;
   font-family: "Inter", sans-serif;
   font-optical-sizing: auto;
   font-size: 16px;
@@ -11,22 +13,26 @@
 }
 
 html {
-  height: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 body {
+  min-height: 100%;
   background-image: url(assets/bg.jpg);
   background-size: cover;
   background-repeat: no-repeat;
-  width: 100vw;
-  height: 100vh;
-  padding: 100px;
+  width: 900px;
 }
 
 header {
   display: flex;
   justify-content: start;
   align-items: center;
+  padding-top: 50px;
+  padding-bottom: 100px;
 }
 
 header img {
@@ -39,6 +45,9 @@ header img {
   font-style: normal;
   font-size: 60px;
   font-weight: 400;
+  width: 350px;
+  padding-bottom: 40px;
+  line-height: 50px;
 }
 
 #title span {
@@ -49,10 +58,46 @@ header img {
   font-weight: 700;
 }
 
+#istructionsContainer {
+  width: 600px;
+}
+
 #instructions {
   color: #d20094;
+  font-size: 30px;
+  padding-bottom: 10px;
+}
+
+ul {
+  padding: 40px 0px 40px 30px;
+}
+
+footer {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 60px;
+}
+
+footer div {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+#checkbox {
+  user-select: none;
+  border: 1px solid white;
 }
 
 #button {
   background-color: #00ffff;
+  height: 60px;
+  width: 220px;
+  font-weight: 900;
+  font-size: 20px;
+  color: rgb(12, 17, 59);
+}
+
+#button:hover {
+  box-shadow: 0px 0px 30px #00ffff;
 }
