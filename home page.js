@@ -1,6 +1,7 @@
 const button = document.getElementById("button");
 let checkbox = document.getElementById("checkbox");
 button.disabled = true;
+checkbox.checked = false;
 
 checkbox.addEventListener("change", () => {
   checkbox.checked === true
