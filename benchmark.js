@@ -299,7 +299,6 @@ lblRadioButton.className = "btn";
 //objDisplay.appendChild(objRadioButton); //, lblRadioButton);
 objDiv.append(objRadioButton, lblRadioButton);
 objDisplay.append(objDiv);
-
 //objRadioButton.addEventListener("click", checkClick);
 lblRadioButton.addEventListener("click", checkClick, false);
 lblRadioButton.myParam = arAnswer[i];
@@ -318,6 +317,8 @@ function checkClick(evt){
 //alert(evt.currentTarget.myParam);
 //alert(evt.currentTarget.innerText);
 strAnswer = evt.currentTarget.innerText;
+console.log("evt", evt);
+evt.currentTarget.style.background = "#9c7990"
 /*
 const objBtn = document.querySelectorAll("bottoni");
 for (let i=0; i<objBtn.length; i++){
