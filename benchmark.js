@@ -65,11 +65,7 @@ const questions = [
     question:
       "What is the code name for the mobile operating system Android 7.0?",
     correct_answer: "Nougat",
-    incorrect_answers: [
-      "Ice Cream Sandwich",
-      "Jelly Bean",
-      "Marshmallow",
-    ],
+    incorrect_answers: ["Ice Cream Sandwich", "Jelly Bean", "Marshmallow"],
   },
   {
     category: "Science: Computers",
@@ -98,31 +94,23 @@ const questions = [
   },
 ];
 
-
 let strAnswer = "";
-//const objDisplay = document.querySelector("display");
 
-const arAnswerContainer =[];  // array che mi contiene le risposte: 1 = risposta corretta, 0 = risposta sbagliata
+const arAnswerContainer = []; // array che mi contiene le risposte: 1 = risposta corretta, 0 = risposta sbagliata
 
 let rightAnswerCounter = 0;
-
-// oggetto HTML che conterrà il risultato del quiz
-//const objQuestionText = document.getElementById("questionText");
 
 // oggetto HTML che conterrà il risultato del quiz
 const objQuestionText = document.querySelector(".questionLog");
 
 //oggetto HTML che contiene la domanda del quiz
 const objQuestionDisplay = document.getElementById("question");
-//console.log("objQustioneDisplay vale: " , objQuestionDisplay);
 
 // oggetto HTML che visualizza le risposte multiple e contiene i radio button
 const objDisplay = document.getElementById("customRadio");
-//console.log("objDisplay vale: " , objDisplay);
 
 //oggetto HTML che è un contatore delle domande
 const objCounter = document.getElementById("txtCounter");
-//console.log("objCounter vale: " , objCounter)
 
 // oggetto HTML, è il bottone continua che permetta di andare avanti nel quiz
 const objBtnContinue = document.getElementById("btnContinue");
@@ -134,257 +122,154 @@ const objLefSpan = document.querySelector(".leftSpan");
 // oggetto HTML che invece serve a visualizare il numero totale delle domande che compongono il quiz
 const objRightSpan = document.querySelector(".rightSpan");
 
+function showResult() {
+  removeChilds(objDisplay);
+  objQuestionDisplay.innerText =
+    "Hai completato il quiz, hai risposto correttamente a: " +
+    rightAnswerCounter +
+    " domande su " +
+    questions.length +
+    ", sotto puoi vedere il risultato";
+  let objDiv = document.createElement("div");
+  for (let i = 0; i < arAnswerContainer.length; i++) {
+    let objPar = document.createElement("p");
+    let objSpan = document.createElement("span");
+    let strResult =
+      "Domanda: " + (i + 1) + ") " + questions[i].question + " -- risposta: ";
 
-
-function showResult(){
-removeChilds(objDisplay);
-objQuestionDisplay.innerText = "Hai completato il quiz, hai risposto correttamente a: " + rightAnswerCounter + " domande su " + questions.length + " sotto puoi vedere il risultato";
-let objDiv = document.createElement("div");
-for (let i=0; i<arAnswerContainer.length;i++){
-  let objPar = document.createElement("p");
-  let objSpan = document.createElement("span");
-  let strResult = "Domanda: " + (i+1) + ") " + questions[i].question + " -- risposta: ";
-  
-  if (arAnswerContainer[i]){
-    //strResult += " -- risposta corretta";
-    objSpan.innerText = "corretta"
+    if (arAnswerContainer[i]) {
+      objSpan.innerText = "corretta";
+    } else {
+      objSpan.innerText = "errata";
+      objSpan.className = "rightSpan";
+    }
+    objPar.innerText = strResult;
+    objPar.appendChild(objSpan);
+    objDiv.append(objPar);
   }
-  else{
-    //strResult += " -- risposta errata";
-    objSpan.innerText = "errata";
-    objSpan.className = "rightSpan";
-  }
-  objPar.innerText = strResult;
-  objPar.appendChild(objSpan);
-  objDiv.append(objPar);
+  removeChilds(objQuestionText);
+  objQuestionText.className = "showResult";
+  objQuestionText.append(objDiv);
 }
-removeChilds(objQuestionText);
-//objQuestionText.className = "questionLog";
-objQuestionText.className = "showResult";
-objQuestionText.append(objDiv);
-}
-
 
 //nextQuestion ();
-function checkAnswer(index){
-//alert("la risposta corretta è: "+questions[index].correct_answer);
-//const arRadioButton = document.querySelectorAll(".bottoni");
-//alert("arRadioButton è lungo : "+arRadioButton.length);
-let bCorrectAnswer = false;
-
-/*
-for (let i=0;i<arRadioButton.length;i++){
-  alert("arRadioButton è checcato? : "+arRadioButton[i].checked);
-  if (arRadioButton[i].checked && arRadioButton[i].value === questions[index].correct_answer){
+function checkAnswer(index) {
+  let bCorrectAnswer = false;
+  if (strAnswer === questions[index].correct_answer) {
     bCorrectAnswer = true;
-    alert("corretto");
-    break;
   }
 
-}
-*/
-if (strAnswer === questions[index].correct_answer){
-  bCorrectAnswer = true;
-  //alert("corretto");
-}
+  bCorrectAnswer ? arAnswerContainer.push(1) : arAnswerContainer.push(0);
+  if (bCorrectAnswer) rightAnswerCounter++;
 
-bCorrectAnswer ? arAnswerContainer.push(1) : arAnswerContainer.push(0);
-if (bCorrectAnswer) rightAnswerCounter++;
-
-bCorrectAnswer = false;
-strAnswer='';
-//arAnswerContainer.push(bCorrectAnswer);
-//alert(arAnswerContainer);
+  bCorrectAnswer = false;
+  strAnswer = "";
 }
 
-
-function removeChilds(element){
-element.textContent ="";
-/*
-while (element.firstChild) {
-  element.removeChild(element.firstChild);
-}
-*/ 
-
+function removeChilds(element) {
+  element.textContent = "";
 }
 
-
-function showQuestion(index){
-//console.log("h1 prima della modifica vale: ", objQuestionDisplay.innerText);
-objQuestionDisplay.innerText = questions[index].question;
-//console.log("lunghezza array h1 contenenente la domanda vale:", objQuestionDisplay.length);
-//console.log("h1 contenenente la domanda vale:", objQuestionDisplay.innerText)
+function showQuestion(index) {
+  objQuestionDisplay.innerText = questions[index].question;
 }
 
+function makeRadioButtons(index) {
+  //svuoto il contenitore delle risposte
+  removeChilds(objDisplay);
+  let arAnswer = questions[index].incorrect_answers;
+  let rndNumber = Math.floor(Math.random() * arAnswer.length);
 
+  arAnswer.splice(rndNumber, 0, questions[index].correct_answer);
 
+  //itero l'array delle risposte e creo i radiobuttons
+  for (let i = 0; i < arAnswer.length; i++) {
+    let objDiv = document.createElement("div");
+    let objRadioButton = document.createElement("input");
+    objRadioButton.type = "radio";
+    objRadioButton.name = "question" + index;
+    objRadioButton.value = arAnswer[i];
+    objRadioButton.id = "rb" + i;
+    objRadioButton.className = "bottoni";
 
-function makeRadioButtons(index){
-//svuoto il contenitore delle risposte
-removeChilds(objDisplay);
-//console.log("funzione genera i radio button");
-let arAnswer = questions[index].incorrect_answers;
-let rndNumber = Math.floor(Math.random()*arAnswer.length);
-//console.log("array delle risposte sbagliate vale: ", arAnswer);
+    let lblRadioButton = document.createElement("label");
+    lblRadioButton.for = "rb" + i;
+    lblRadioButton.innerText = arAnswer[i];
 
-arAnswer.splice(rndNumber,0,questions[index].correct_answer);
-//let rndNumber = Math.floor(Math.random()*5);
-
-//console.log("Numero random  vale: ", rndNumber);
-//console.log("array delle risposte totali vale: ", arAnswer);
-
-//itero l'array delle risposte e creo i radiobuttons
-for (let i=0; i<arAnswer.length; i++){
-  let objDiv = document.createElement("div");
-  let objRadioButton = document.createElement("input");
-  objRadioButton.type = "radio";
-  objRadioButton.name = "question"+index;
-  objRadioButton.value = arAnswer[i];
-  objRadioButton.id ="rb" + i;
-  objRadioButton.className ="bottoni";
-
-  //console.log(objRadioButton);
-  let lblRadioButton = document.createElement("label");
-  lblRadioButton.for = "rb" + i;
-  //lblRadioButton.innerText = questions[index].question
-  lblRadioButton.innerText = arAnswer[i]
-
-  //objDisplay.appendChild(objRadioButton); //, lblRadioButton);
-  objDiv.append(objRadioButton, lblRadioButton);
-  objDisplay.append(objDiv);
-  //objDisplay.append(objRadioButton, lblRadioButton);
-  
-} 
-
+    objDiv.append(objRadioButton, lblRadioButton);
+    objDisplay.append(objDiv);
+  }
 }
 
-/*--------------------------------prova nuovo metodo di creare i button radio-------------------------------------------------*/
-function makeRadioButtons_lbl(index){
-//svuoto il contenitore delle risposte
-removeChilds(objDisplay);
-//console.log("funzione genera i radio button");
-let arAnswer = questions[index].incorrect_answers;
-let rndNumber = Math.floor(Math.random()*arAnswer.length);
-//console.log("array delle risposte sbagliate vale: ", arAnswer);
+function makeRadioButtons_lbl(index) {
+  //svuoto il contenitore delle risposte
+  removeChilds(objDisplay);
+  let arAnswer = questions[index].incorrect_answers;
+  let rndNumber = Math.floor(Math.random() * arAnswer.length);
 
-arAnswer.splice(rndNumber,0,questions[index].correct_answer);
-//let rndNumber = Math.floor(Math.random()*5);
+  arAnswer.splice(rndNumber, 0, questions[index].correct_answer);
 
-//console.log("Numero random  vale: ", rndNumber);
-//console.log("array delle risposte totali vale: ", arAnswer);
+  //itero l'array delle risposte e creo i radiobuttons
+  for (let i = 0; i < arAnswer.length; i++) {
+    let objDiv = document.createElement("div");
+    let objRadioButton = document.createElement("input");
 
-//itero l'array delle risposte e creo i radiobuttons
-for (let i=0; i<arAnswer.length; i++){
-let objDiv = document.createElement("div");
-let objRadioButton = document.createElement("input");
+    objRadioButton.type = "radio";
+    objRadioButton.name = "question" + index;
+    objRadioButton.value = arAnswer[i];
+    objRadioButton.id = "rb" + i;
+    objRadioButton.className = "bottoni";
+    let lblRadioButton = document.createElement("label");
+    lblRadioButton.for = "rb" + i;
+    lblRadioButton.innerText = arAnswer[i];
+    lblRadioButton.className = "btn";
 
-
-objRadioButton.type = "radio";
-objRadioButton.name = "question"+index;
-objRadioButton.value = arAnswer[i];
-objRadioButton.id ="rb" + i;
-objRadioButton.className ="bottoni";
-//alert("aggiunto evenco click a ", objRadioButton.value);
-//objRadioButton.addEventListener("click", checkClick);
-
-
-
-//console.log(objRadioButton);
-let lblRadioButton = document.createElement("label");
-lblRadioButton.for = "rb" + i;
-//lblRadioButton.innerText = questions[index].question
-lblRadioButton.innerText = arAnswer[i];
-lblRadioButton.className = "btn";
-
-//objDisplay.appendChild(objRadioButton); //, lblRadioButton);
-objDiv.append(objRadioButton, lblRadioButton);
-objDisplay.append(objDiv);
-//objRadioButton.addEventListener("click", checkClick);
-lblRadioButton.addEventListener("click", checkClick, false);
-lblRadioButton.myParam = arAnswer[i];
-
-//alert("aggiunto evenco click a ", objRadioButton.value);
-
-//alert("objdisplay ", objDisplay);
-//objDisplay.append(objRadioButton, lblRadioButton);
-
-} 
-
+    objDiv.append(objRadioButton, lblRadioButton);
+    objDisplay.append(objDiv);
+    lblRadioButton.addEventListener("click", checkClick, false);
+    lblRadioButton.myParam = arAnswer[i];
+  }
 }
 
 //funzione che valorizza la risposta in una variabile globale
-function checkClick(evt){
-//alert(evt.currentTarget.myParam);
-//alert(evt.currentTarget.innerText);
-strAnswer = evt.currentTarget.innerText;
-console.log("evt", evt);
-evt.currentTarget.style.background = "#9c7990"
-/*
-const objBtn = document.querySelectorAll("bottoni");
-for (let i=0; i<objBtn.length; i++){
-  if (objBtn[i].checked){
-      //alert(objBtn[i].value);
-      let strLbl ="lbl-" + i //parseInt(i+1);
-      let objLbl = document.getElementById(strLbl);
-      strAnswer = objLbl.innerText;
-      alert(strAnswer);
-      break;
-  }   
-} 
-*/   
-
+function checkClick(evt) {
+  strAnswer = evt.currentTarget.innerText;
+  console.log("evt", evt);
+  evt.currentTarget.style.background =
+    "linear-gradient(180deg, #d20094 60%, #900080 100%)";
 }
 
+function nextQuestion() {
+  let valore = parseInt(objCounter.value);
+  if (valore > 0 && valore <= questions.length) {
+    //controllo se la risposta è corretta
+    checkAnswer(valore - 1);
+  }
 
+  if (valore < questions.length) {
+    console.log(
+      valore + 1,
+      " domanda dell' array questinos  ",
+      questions[valore].question
+    );
 
+    showQuestion(valore);
 
-
-function nextQuestion(){
-let valore = parseInt(objCounter.value);
-if (valore>0 && valore <= questions.length){
-  //controllo se la risposta è corretta
-  checkAnswer(valore-1);
-}
-
-
-if (valore < questions.length){
-  console.log(valore+1, " domanda dell' array questinos  " , questions[valore].question);
-  
-
-  //show Question
-  showQuestion(valore);
-  //makeRadioButton metodo 1
-  //makeRadioButtons(valore);
-
-  //makeRadioButton metodo 2
-  makeRadioButtons_lbl(valore);
-
-
-}  
+    makeRadioButtons_lbl(valore);
+  }
   valore += 1;
-//  objCounter.value = valore; 
-//  objLefSpan.innerText ="Question " + valore;
 
-if (valore === questions.length+1){
-  alert(arAnswerContainer);
-  alert("hai risposto correttamente a "+rightAnswerCounter);
-  objBtnContinue.disabled = true;
-  showResult();
-}else{
-  objCounter.value = valore; 
-  objLefSpan.innerText ="Question " + valore;
-
+  if (valore === questions.length + 1) {
+    alert("Hai risposto correttamente a " + rightAnswerCounter + " domande");
+    objBtnContinue.disabled = true;
+    showResult();
+  } else {
+    objCounter.value = valore;
+    objLefSpan.innerText = "Question " + valore;
+  }
 }
 
+if (objCounter.value === "0") {
+  objRightSpan.innerText = "/" + questions.length;
+  nextQuestion();
 }
-
-
-//console.log("array questinos lungo: " , questions.length);
-//console.log("prima domand dell' array questinos lungo: " , questions[0].question);
-//console.log("prima domand dell' array quante risposte ci sono ?: " , questions[0].incorrect_answers.length);
-
-if (objCounter.value==="0"){
-objRightSpan.innerText = "/"+questions.length;
-nextQuestion();
-}
-//removeChilds(objDisplay);

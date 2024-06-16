@@ -30,15 +30,17 @@ body {
 }
 
 .container {
-  height: 85vh;
+  min-height: 80vh;
+  max-height: 80vh;
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
   flex-direction: column;
 }
 
 .questionText {
-  max-width: 500px;
+  max-width: 1000px;
+  max-height: 50px;
   display: flex;
   align-items: center;
   text-align: center;
@@ -47,7 +49,7 @@ body {
   margin: 0px;
   font-family: "Outfit", sans-serif;
   font-optical-sizing: auto;
-  font-weight: 60px;
+  font-size: 40px;
   font-style: normal;
 }
 
@@ -60,35 +62,49 @@ body {
   margin: 70px 0px;
 }
 
-#customRadio div label {
-  color: rgb(0, 0, 99);
-  width: 300px;
-  height: 65px;
-  text-align: center;
-}
-
 #customRadio div {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  width: 300px;
-  height: 65px;
+  min-width: 300px;
+  min-height: 65px;
   border-radius: 50px;
-  box-shadow: 0 0 5px #999;
-  transition: box-shadow 0.3s ease;
-  background-color: white;
-  opacity: 0.5;
+  border: 2px solid white;
+  background-color: transparent;
   position: relative;
+}
+
+#customRadio div label {
+  color: white;
+  text-align: center;
+  width: 100%;
+  height: 65px;
 }
 
 .questionLog {
   color: white;
   height: 15vh;
-  margin-bottom: 80px;
   font-size: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
   align-content: flex-end;
   text-align: center;
+}
+
+#btnContinue {
+  min-width: 300px;
+  min-height: 65px;
+  border-radius: 50px;
+  background-color: #00ffff;
+  color: rgb(12, 17, 59);
+  font-weight: 900;
+  font-size: 20px;
+}
+
+#btnContinue:hover {
+  box-shadow: 0px 0px 30px #00ffff;
 }
 
 .rightSpan {
@@ -111,44 +127,16 @@ input[type="checkbox"] {
   display: none;
 }
 
-/*CSS ORIGINALE*/
-/*
-input[type=radio] + label.btn{
-  padding: 5px 10px;
-  margin: 5px 10px;
-  display: inline-block;
-  text-transform: uppercase;
-  font-weight: 700;
-  outline: none;
-  position: relative;
-  -webkit-transition: all 0.3s;
-  -moz-transition: all 0.3s;
-  transition: all 0.3s;
-  background: #cb4e4e;
-  color: #fff;
-  box-shadow: 0 6px #ab3c3c;
-  -webkit-transition: none;
-  -moz-transition: none;
-  transition: none;
-  border: none;
-  border-radius: 25px;
-  cursor: pointer;
-  }
-*/
-
-/* PROVA MIA*/
 input[type="radio"] + label.btn {
   display: flex;
   justify-content: center;
   align-items: center;
-  /*text-transform: uppercase;*/
   font-weight: 700;
   outline: none;
   position: relative;
   -webkit-transition: all 0.3s;
   -moz-transition: all 0.3s;
   transition: all 0.3s;
-  /*background: #cb4e4e;*/
   color: #fff;
   -webkit-transition: none;
   -moz-transition: none;
@@ -165,6 +153,6 @@ input[type="radio"] + label.btn:hover {
 }
 
 .showResult {
-  font-size: 13px;
+  font-size: 18px;
   color: white;
 }
